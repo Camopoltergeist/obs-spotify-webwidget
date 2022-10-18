@@ -21,7 +21,7 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			title: "Quick Webpack Template",
 			template: "./src/index.html",
-			scriptLoading: "module"
+			scriptLoading: "defer"
 		})
 	],
 	module: {
