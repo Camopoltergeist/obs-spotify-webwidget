@@ -5,6 +5,7 @@
   "scripts": {
     "build": "npx webpack"
   },
+  "private": true,
   "repository": {
     "type": "git"
   },
