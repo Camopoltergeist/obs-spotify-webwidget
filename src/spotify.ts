@@ -20,6 +20,7 @@ async function refreshToken(){
 	const body = await res.json();
 
 	if(!res.ok){
+		accessToken = null;
 		throw new Error(`Failed to refresh token: ${body.error}: ${body.error_description}`);
 	}
 
