@@ -1,7 +1,3 @@
-function getConfig(){
-	const configElement = document.getElementById("config");
+import config from "./config";
 
-	return configElement !== null ? JSON.parse(configElement.innerText) : {};
-}
-
-console.log(getConfig());
+console.log(config);
