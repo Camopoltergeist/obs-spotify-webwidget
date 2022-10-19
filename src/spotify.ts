@@ -4,6 +4,7 @@ const tokenURL = `https://accounts.spotify.com/api/token`;
 const apiURL = `https://api.spotify.com/v1`;
 
 let accessToken: string | null = null;
+let refreshPromise: Promise<void> | null = null;
 
 export async function init(){
 	await refreshToken();
@@ -15,7 +16,11 @@ interface IPlaybackState{
 
 export async function getPlaybackState(retry: boolean = true): Promise<IPlaybackState | null>{
 	if(accessToken === null){
-		throw new Error(`Failed to get playback state: invalid access token!`);
+		if(refreshPromise === null){
+			throw new Error(`Failed to get playback state: invalid access token!`);
+		}
+
+		await refreshPromise;
 	}
 
 	const endPoint = `${apiURL}/me/player`;
@@ -25,16 +30,6 @@ export async function getPlaybackState(retry: boolean = true): Promise<IPlayback
 			"Authorization": `Bearer ${accessToken}`
 		}
 	});
-
-	if(res.status === 401){
-		await refreshToken();
-
-		if(retry){
-			return await getPlaybackState(false);
-		}
-
-		throw new Error(`Failed to get playback state: invalid access token after retry!`);
-	}
 
 	if(!res.ok){
 		throw new Error(`Failed to get playback state: api returned ${res.status} ${res.statusText}`);
@@ -61,8 +56,6 @@ interface ITokenErrorResponse{
 	error_description: string
 };
 
-let refreshPromise: Promise<void> | null = null;
-
 async function refreshToken(){
 	if(refreshPromise !== null){
 		return refreshPromise;
@@ -88,6 +81,7 @@ async function refreshToken(){
 		accessToken = body.access_token;
 
 		resolve();
+		refreshPromise = null;
 	});
 
 	return refreshPromise;
