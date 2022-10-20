@@ -6,8 +6,14 @@ const apiURL = `https://api.spotify.com/v1`;
 let accessToken: string | null = null;
 let refreshPromise: Promise<void> | null = null;
 
-export async function init(){
+let refreshIntervalId: number | undefined;
+
+export async function init(refreshInterval: number = 1000){
 	await refreshToken();
+
+	// Don't let refesh interval go below 1 second because of rate limiting stuff.
+	refreshInterval = Math.max(refreshInterval, 1000);
+	refreshIntervalId = setInterval(refreshPlaybackState, refreshInterval);
 }
 
 interface IPlaybackState{
@@ -71,9 +77,16 @@ interface ISpotifyImage{
 	width: number;
 }
 
-export async function getPlaybackState(retry: boolean = true): Promise<IPlaybackState | null>{
+let playbackState: IPlaybackState | null = null;
+
+export function getPlaybackState(){
+	return playbackState;
+}
+
+async function refreshPlaybackState(): Promise<void>{
 	if(accessToken === null){
 		if(refreshPromise === null){
+			clearInterval(refreshIntervalId);
 			throw new Error(`Failed to get playback state: invalid access token!`);
 		}
 
@@ -93,10 +106,10 @@ export async function getPlaybackState(retry: boolean = true): Promise<IPlayback
 	}
 
 	if(res.status === 204){
-		return null;
+		playbackState = null;
 	}
 
-	return await res.json() as IPlaybackState;
+	playbackState =  await res.json() as IPlaybackState;
 }
 
 const tokenAuthStr = `Basic ${btoa(`${config.clientId}:${config.clientSecret}`)}`;
