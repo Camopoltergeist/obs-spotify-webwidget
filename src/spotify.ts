@@ -11,8 +11,65 @@ export async function init(){
 }
 
 interface IPlaybackState{
+	device: any;
+	repeat_state: string;
+	shuffle_state: string;
+	context: any | null;
+	timestamp: number;
 	progress_ms: number | null;
+	is_playing: boolean;
+	item: IPlaybackItem;
+	currently_playing_type: string;
+	actions: any;
 };
+
+interface IPlaybackItem{
+	album: any;
+	artists: IArtist[];
+	available_markets: string[];
+	disc_number: number;
+	duration_ms: number;
+	explicit: boolean;
+	external_ids: {
+		isrc: string;
+		ean: string;
+		upc: string;
+	};
+	external_urls: {
+		spotify: string;
+	}
+	href: string;
+	id: string;
+	is_playable?: boolean;
+	linked_from?: any;
+	restrictions: any;
+	name: string;
+	popularity: number;
+	preview_url: string;
+	track_number: number;
+	type: string;
+	uri: string;
+	is_local: string;
+}
+
+interface IArtist{
+	external_urls: any;
+	followers: any;
+	genres: string[];
+	href: string;
+	id: string;
+	images: ISpotifyImage[];
+	name: string;
+	popularity: number;
+	type: string;
+	uri: string;
+}
+
+interface ISpotifyImage{
+	url: string;
+	height: number;
+	width: number;
+}
 
 export async function getPlaybackState(retry: boolean = true): Promise<IPlaybackState | null>{
 	if(accessToken === null){

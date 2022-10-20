@@ -1,5 +1,5 @@
 import { getPlaybackState, init } from "./spotify";
 
 init().then(async () => {
-	console.log((await getPlaybackState())?.progress_ms);
+	console.log((await getPlaybackState())?.item.name);
 });
