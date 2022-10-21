@@ -23,7 +23,24 @@ function updateDisplay(time: DOMHighResTimeStamp){
 	const title = state.item.name;
 
 	const timeSinceRefresh = time - state.localTimeStamp;
-	const songTime = Math.round(state.progress_ms as number + timeSinceRefresh);
+	const songProgress = Math.round(state.progress_ms as number + timeSinceRefresh);
 
-	(mainDiv as HTMLDivElement).innerText = `${artist} - ${title} [${songTime}]`;
+	const progressStr = generateTimeString(songProgress);
+
+	(mainDiv as HTMLDivElement).innerText = `${artist} - ${title} [${progressStr}]`;
+}
+
+function generateTimeString(timeMS: number): string{
+	let minutes = String(Math.floor(timeMS / 60000));
+	let seconds = String(Math.floor(timeMS % 60000 / 1000));
+
+	if(minutes.length < 2){
+		minutes = "0" + minutes;
+	}
+
+	if(seconds.length < 2){
+		seconds = "0" + seconds;
+	}
+
+	return `${minutes} : ${seconds}`;
 }
