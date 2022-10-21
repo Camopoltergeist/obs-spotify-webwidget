@@ -31,6 +31,7 @@ interface IPlaybackState{
 	item: IPlaybackItem;
 	currently_playing_type: string;
 	actions: any;
+	localTimeStamp: number;
 };
 
 interface IPlaybackItem{
@@ -114,7 +115,8 @@ async function refreshPlaybackState(): Promise<void>{
 		return;
 	}
 
-	playbackState =  await res.json() as IPlaybackState;
+	playbackState = await res.json() as IPlaybackState;
+	playbackState.localTimeStamp = performance.now();
 }
 
 const tokenAuthStr = `Basic ${btoa(`${config.clientId}:${config.clientSecret}`)}`;
