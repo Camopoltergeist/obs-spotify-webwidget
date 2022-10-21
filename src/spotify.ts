@@ -6,14 +6,18 @@ const apiURL = `https://api.spotify.com/v1`;
 let accessToken: string | null = null;
 let refreshPromise: Promise<void> | null = null;
 
-let refreshIntervalId: number | undefined;
+let stateRefreshIntervalId: number | undefined;
+let tokenRefreshIntervalId: number | undefined;
 
 export async function init(refreshInterval: number = 1000){
 	await refreshToken();
 
 	// Don't let refesh interval go below 1 second because of rate limiting stuff.
 	refreshInterval = Math.max(refreshInterval, 1000);
-	refreshIntervalId = setInterval(refreshPlaybackState, refreshInterval);
+	stateRefreshIntervalId = setInterval(refreshPlaybackState, refreshInterval);
+
+	// Refresh access token every 15 minutes
+	tokenRefreshIntervalId = setInterval(refreshToken, 60 * 15 * 1000);
 }
 
 interface IPlaybackState{
@@ -86,7 +90,7 @@ export function getPlaybackState(){
 async function refreshPlaybackState(): Promise<void>{
 	if(accessToken === null){
 		if(refreshPromise === null){
-			clearInterval(refreshIntervalId);
+			clearInterval(stateRefreshIntervalId);
 			throw new Error(`Failed to get playback state: invalid access token!`);
 		}
 
@@ -145,6 +149,7 @@ async function refreshToken(){
 		if(!res.ok){
 			const body = await res.json() as ITokenErrorResponse;
 			accessToken = null;
+			clearInterval(tokenRefreshIntervalId);
 			throw new Error(`Failed to refresh token: ${body.error}: ${body.error_description}`);
 		}
 	
