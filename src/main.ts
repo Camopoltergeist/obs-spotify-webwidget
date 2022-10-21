@@ -10,7 +10,7 @@ init().then(() => {
 	requestAnimationFrame(updateDisplay);
 });
 
-function updateDisplay(){
+function updateDisplay(time: DOMHighResTimeStamp){
 	requestAnimationFrame(updateDisplay);
 	const state = getPlaybackState();
 
@@ -22,5 +22,8 @@ function updateDisplay(){
 	const artist = state.item.artists[0].name;
 	const title = state.item.name;
 
-	(mainDiv as HTMLDivElement).innerText = `${artist} - ${title}`;
+	const timeSinceRefresh = time - state.localTimeStamp;
+	const songTime = Math.round(state.progress_ms as number + timeSinceRefresh);
+
+	(mainDiv as HTMLDivElement).innerText = `${artist} - ${title} [${songTime}]`;
 }
