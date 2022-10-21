@@ -107,6 +107,7 @@ async function refreshPlaybackState(): Promise<void>{
 
 	if(res.status === 204){
 		playbackState = null;
+		return;
 	}
 
 	playbackState =  await res.json() as IPlaybackState;
