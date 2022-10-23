@@ -2,6 +2,7 @@ import { getPlaybackState } from "./spotify";
 
 const mainDiv = document.getElementById("mainDiv");
 const songTextContainer = document.getElementById("songTextContainer");
+const progressContainer = document.getElementById("progressContainer");
 
 if(mainDiv === null){
 	throw new Error("Could not find mainDiv in document!");
@@ -9,6 +10,10 @@ if(mainDiv === null){
 
 if(songTextContainer === null){
 	throw new Error("Could not find songTextContainer in document!");
+}
+
+if(progressContainer === null){
+	throw new Error("Could not find progressContainer in document!");
 }
 
 let currentElem: HTMLSpanElement;
@@ -86,7 +91,9 @@ function updateDisplay(time: DOMHighResTimeStamp){
 
 	const progressStr = generateTimeString(songProgress);
 
-	const updatedText = `${artist} - ${title} [${progressStr}]`;
+	const updatedText = `${artist} - ${title}`;
+
+	(progressContainer as HTMLDivElement).innerText = progressStr;
 
 	if(state.item.id === lastId){
 		currentElem.innerText = updatedText;
