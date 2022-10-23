@@ -63,7 +63,8 @@ function updateDisplay(time: DOMHighResTimeStamp){
 	requestAnimationFrame(updateDisplay);
 	const state = getPlaybackState();
 
-	if(state === null){
+	// Handle undocumented edge case with Spotify's API where it returns a null item, a field which should never be null.
+	if(state === null || state.item === null){
 		if(lastId !== null){
 			doTransition("Nobody - Nothing");
 		}
