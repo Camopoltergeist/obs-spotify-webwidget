@@ -20,7 +20,7 @@ export async function init(refreshInterval: number = 1000){
 	tokenRefreshIntervalId = setInterval(refreshToken, 60 * 15 * 1000);
 }
 
-interface IPlaybackState{
+export interface IPlaybackState{
 	device: any;
 	repeat_state: string;
 	shuffle_state: string;

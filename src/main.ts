@@ -1,4 +1,4 @@
-import { getPlaybackState, init } from "./spotify";
+import { getPlaybackState, init, IPlaybackState } from "./spotify";
 
 const mainDiv = document.getElementById("mainDiv");
 
@@ -6,14 +6,10 @@ if(mainDiv === null){
 	throw new Error("Could not find mainDiv in document!");
 }
 
-// init().then(() => {
-// 	requestAnimationFrame(updateDisplay);
-// });
+init().then(() => {
+	requestAnimationFrame(updateDisplay);
+});
 
-const button = document.querySelector("#testButton") as HTMLButtonElement;
-button.addEventListener("click", doTransition);
-
-let count = 0;
 let currentElem: HTMLSpanElement;
 let nextElem: HTMLSpanElement;
 
@@ -32,14 +28,14 @@ function createInitialElements(){
 
 createInitialElements();
 
-function doTransition(){
+function doTransition(nextText: string){
 	const inElem = nextElem;
 	const outElem = currentElem;
 
 	inElem.classList.remove("in");
 	inElem.classList.add("shown");
 
-	inElem.innerText = `Transition count: ${count++}`;
+	inElem.innerText = nextText;
 
 	outElem.classList.remove("shown");
 	outElem.classList.add("out");
@@ -61,12 +57,18 @@ function createTextElement(){
 	return textElem;
 }
 
+let lastId: string | null = null;
+
 function updateDisplay(time: DOMHighResTimeStamp){
 	requestAnimationFrame(updateDisplay);
 	const state = getPlaybackState();
 
 	if(state === null){
-		(mainDiv as HTMLDivElement).innerText = "Nobody - Nothing";
+		if(lastId !== null){
+			doTransition("Nobody - Nothing");
+		}
+
+		lastId = null;
 		return;
 	}
 
@@ -78,7 +80,16 @@ function updateDisplay(time: DOMHighResTimeStamp){
 
 	const progressStr = generateTimeString(songProgress);
 
-	(mainDiv as HTMLDivElement).innerText = `${artist} - ${title} [${progressStr}]`;
+	const updatedText = `${artist} - ${title} [${progressStr}]`;
+
+	if(state.item.id === lastId){
+		currentElem.innerText = updatedText;
+	}
+	else{
+		doTransition(updatedText);
+	}
+
+	lastId = state.item.id;
 }
 
 function generateTimeString(timeMS: number): string{
