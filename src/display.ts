@@ -1,9 +1,14 @@
 import { getPlaybackState } from "./spotify";
 
 const mainDiv = document.getElementById("mainDiv");
+const songTextContainer = document.getElementById("songTextContainer");
 
 if(mainDiv === null){
 	throw new Error("Could not find mainDiv in document!");
+}
+
+if(songTextContainer === null){
+	throw new Error("Could not find songTextContainer in document!");
 }
 
 let currentElem: HTMLSpanElement;
@@ -19,7 +24,7 @@ function createInitialElements(){
 
 	nextElem = createTextElement();
 
-	mainDiv?.append(currentElem, nextElem);
+	songTextContainer?.append(currentElem, nextElem);
 }
 
 createInitialElements();
@@ -46,7 +51,7 @@ function doTransition(nextText: string){
 
 	currentElem = inElem;
 	nextElem = createTextElement();
-	mainDiv?.append(nextElem);
+	songTextContainer?.append(nextElem);
 }
 
 function createTextElement(){

@@ -14,10 +14,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 		<style>
-			#mainDiv{
-				height: 1.2em;
-			}
-
 			.songText{
 				transition: left 0.5s, opacity 0.5s;
 				position: absolute;
@@ -38,6 +34,10 @@
 				left: 20px;
 			}
 
+			.spacer{
+				visibility: hidden;
+			}
+
 			#mainDiv{
 				position: relative;
 				overflow: hidden;
@@ -47,7 +47,10 @@
 
 	<body>
 		<div id="mainDiv">
-
+			<div id="songTextContainer">
+				<span class="spacer">Dummy Text</span>
+			</div>
+			<div id="progressContainer"></div>
 		</div>
 	</body>
 </html>
