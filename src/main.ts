@@ -6,9 +6,60 @@ if(mainDiv === null){
 	throw new Error("Could not find mainDiv in document!");
 }
 
-init().then(() => {
-	requestAnimationFrame(updateDisplay);
-});
+// init().then(() => {
+// 	requestAnimationFrame(updateDisplay);
+// });
+
+const button = document.querySelector("#testButton") as HTMLButtonElement;
+button.addEventListener("click", doTransition);
+
+let count = 0;
+let currentElem: HTMLSpanElement;
+let nextElem: HTMLSpanElement;
+
+function createInitialElements(){
+	currentElem = createTextElement();
+
+	currentElem.classList.remove("in");
+	currentElem.classList.add("shown");
+
+	currentElem.innerText = "Initial Element";
+
+	nextElem = createTextElement();
+
+	mainDiv?.append(currentElem, nextElem);
+}
+
+createInitialElements();
+
+function doTransition(){
+	const inElem = nextElem;
+	const outElem = currentElem;
+
+	inElem.classList.remove("in");
+	inElem.classList.add("shown");
+
+	inElem.innerText = `Transition count: ${count++}`;
+
+	outElem.classList.remove("shown");
+	outElem.classList.add("out");
+
+	outElem.addEventListener("transitionend", () => {
+		outElem.remove();
+	});
+
+	currentElem = inElem;
+	nextElem = createTextElement();
+	mainDiv?.append(nextElem);
+}
+
+function createTextElement(){
+	const textElem = document.createElement("span");
+
+	textElem.classList.add("songText", "in");
+
+	return textElem;
+}
 
 function updateDisplay(time: DOMHighResTimeStamp){
 	requestAnimationFrame(updateDisplay);
@@ -23,7 +74,7 @@ function updateDisplay(time: DOMHighResTimeStamp){
 	const title = state.item.name;
 
 	const timeSinceRefresh = time - state.localTimeStamp;
-	const songProgress = Math.round(state.progress_ms as number + timeSinceRefresh);
+	const songProgress = state.is_playing ? Math.round(state.progress_ms as number + timeSinceRefresh) : Math.round(state.progress_ms as number);
 
 	const progressStr = generateTimeString(songProgress);
 
