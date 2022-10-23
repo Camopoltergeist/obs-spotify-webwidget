@@ -9,7 +9,7 @@ let refreshPromise: Promise<void> | null = null;
 let stateRefreshIntervalId: number | undefined;
 let tokenRefreshIntervalId: number | undefined;
 
-export async function init(refreshInterval: number = 1000){
+export async function initSpotifyAPI(refreshInterval: number = 1000){
 	await refreshToken();
 
 	// Don't let refesh interval go below 1 second because of rate limiting stuff.
