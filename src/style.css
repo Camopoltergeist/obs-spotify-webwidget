@@ -1,0 +1,28 @@
+.songText{
+	transition: left 0.5s, opacity 0.5s;
+	position: absolute;
+}
+
+.in{
+	opacity: 0;
+	left: -20px;
+}
+
+.shown{
+	opacity: 1;
+	left: 0px;
+}
+
+.out{
+	opacity: 0;
+	left: 20px;
+}
+
+.spacer{
+	visibility: hidden;
+}
+
+#mainDiv{
+	position: relative;
+	overflow: hidden;
+}
