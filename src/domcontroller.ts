@@ -62,7 +62,7 @@ export function setSongText(songText: string){
 }
 
 function createTextElement(){
-	const textElem = document.createElement("span");
+	const textElem = document.createElement("div");
 
 	textElem.classList.add("songText", "in");
 

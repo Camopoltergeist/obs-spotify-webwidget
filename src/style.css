@@ -1,28 +1,30 @@
 .songText{
-	transition: left 0.5s, opacity 0.5s;
-	position: absolute;
+	transition: transform 0.5s, opacity 0.5s;
 }
 
 .in{
 	opacity: 0;
-	left: -20px;
+	transform: translateX(-1em);
 }
 
 .shown{
 	opacity: 1;
-	left: 0px;
+	grid-column: 1;
+	grid-row: 1;
 }
 
 .out{
 	opacity: 0;
-	left: 20px;
+	grid-column: 1;
+	grid-row: 1;
+	transform: translateX(1em);
 }
 
-.spacer{
-	visibility: hidden;
+#songTextContainer{
+	display: grid;
 }
 
 #mainDiv{
-	position: relative;
-	overflow: hidden;
+	background-color: black;
+	color: white;
 }
