@@ -1,7 +1,10 @@
 interface IConfig{
-	clientId: string;
-	clientSecret: string;
-	refreshToken: string;
+	spotify: {
+		clientId: string;
+		clientSecret: string;
+		refreshToken: string;
+	},
+	bigTransition: boolean
 }
 
 function getConfig(){
@@ -13,17 +16,19 @@ function getConfig(){
 
 	const parsedConfig = JSON.parse(configElement.innerText) as Partial<IConfig>;
 
-	if(typeof parsedConfig.clientId !== "string"){
+	if(typeof parsedConfig?.spotify?.clientId !== "string"){
 		throw new Error(`Missing required config field: clientId`);
 	}
 
-	if(typeof parsedConfig.clientSecret !== "string"){
+	if(typeof parsedConfig?.spotify?.clientSecret !== "string"){
 		throw new Error(`Missing required config field: clientSecret`);
 	}
 
-	if(typeof parsedConfig.refreshToken !== "string"){
+	if(typeof parsedConfig?.spotify?.refreshToken !== "string"){
 		throw new Error(`Missing required config field: refreshToken`);
 	}
+
+	parsedConfig.bigTransition = parsedConfig.bigTransition ?? true;
 
 	return parsedConfig as IConfig;
 }

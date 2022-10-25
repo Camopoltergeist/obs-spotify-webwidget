@@ -1,3 +1,5 @@
+import config from "./config";
+
 const mainDiv = document.getElementById("mainDiv");
 const songTextContainer = document.getElementById("songTextContainer");
 const progressContainer = document.getElementById("progressContainer");
@@ -32,6 +34,8 @@ function createInitialElements(){
 
 createInitialElements();
 
+let transitionTimeout: number | undefined;
+
 export function doTransition(nextText: string){
 	const inElem = nextElem;
 	const outElem = currentElem;
@@ -40,6 +44,15 @@ export function doTransition(nextText: string){
 	inElem.classList.add("shown");
 
 	inElem.innerText = nextText;
+
+	if(config.bigTransition){
+		inElem.classList.add("big");
+		clearTimeout(transitionTimeout);
+
+		transitionTimeout = setTimeout(() => {
+			inElem.classList.remove("big");
+		}, 7000);
+	}
 
 	outElem.classList.remove("shown");
 	outElem.classList.add("out");

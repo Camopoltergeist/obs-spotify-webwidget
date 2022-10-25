@@ -125,7 +125,7 @@ async function refreshPlaybackState(): Promise<void>{
 	playbackState.localTimeStamp = performance.now();
 }
 
-const tokenAuthStr = `Basic ${btoa(`${config.clientId}:${config.clientSecret}`)}`;
+const tokenAuthStr = `Basic ${btoa(`${config.spotify.clientId}:${config.spotify.clientSecret}`)}`;
 
 interface ITokenResponse{
 	access_token: string,
@@ -151,7 +151,7 @@ async function refreshToken(){
 				"Authorization": tokenAuthStr,
 				"Content-Type": `application/x-www-form-urlencoded`
 			},
-			body: `grant_type=refresh_token&refresh_token=${config.refreshToken}`
+			body: `grant_type=refresh_token&refresh_token=${config.spotify.refreshToken}`
 		});
 	
 		if(!res.ok){
