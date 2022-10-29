@@ -48,11 +48,11 @@ export function doTransition(nextText: string){
 	const config = getConfig();
 
 	if(config.bigTransition){
-		inElem.classList.add("big");
+		songTextContainer?.classList.add("big");
 		clearTimeout(transitionTimeout);
 
 		transitionTimeout = setTimeout(() => {
-			inElem.classList.remove("big");
+			songTextContainer?.classList.remove("big");
 		}, 7000);
 	}
 

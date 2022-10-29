@@ -1,9 +1,10 @@
 .songText{
 	transition: transform 0.5s, opacity 0.5s, font-size 1s;
+	font-size: inherit;
 }
 
 .big{
-	font-size: 48px;
+	font-size: 48px !important;
 }
 
 .in{
