@@ -1,4 +1,4 @@
-import config from "./config";
+import {getConfig} from "./config";
 
 const mainDiv = document.getElementById("mainDiv");
 const songTextContainer = document.getElementById("songTextContainer");
@@ -44,6 +44,8 @@ export function doTransition(nextText: string){
 	inElem.classList.add("shown");
 
 	inElem.innerText = nextText;
+
+	const config = getConfig();
 
 	if(config.bigTransition){
 		inElem.classList.add("big");

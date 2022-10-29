@@ -11,7 +11,7 @@ module.exports = {
 		filename: "main.js",
 		path: path.resolve(process.cwd(), "build"),
 		chunkFormat: "module",
-		clean: true
+		clean: false
 	},
 	resolve: {
 		extensions: [".tsx", ".ts", ".js"],

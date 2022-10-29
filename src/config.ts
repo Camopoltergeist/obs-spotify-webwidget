@@ -7,32 +7,61 @@ interface IConfig{
 	bigTransition: boolean
 }
 
-function getConfig(){
-	const configElement = document.getElementById("config");
+const defaultConfig: IConfig = {
+	spotify: {
+		clientId: "",
+		clientSecret: "",
+		refreshToken: ""
+	},
+	bigTransition: true
+};
 
-	if(configElement === null){
-		throw new Error(`Missing config element from document!`);
+function validateConfig(configObj: Partial<IConfig>){
+	validateTypes(configObj, defaultConfig);
+
+	const typedConfig = configObj as IConfig;
+
+	if(typedConfig.spotify.clientId === ""){
+		throw new Error("Failed to validate config: spotify.clientId is missing!");
 	}
 
-	const parsedConfig = JSON.parse(configElement.innerText) as Partial<IConfig>;
-
-	if(typeof parsedConfig?.spotify?.clientId !== "string"){
-		throw new Error(`Missing required config field: clientId`);
+	if(typedConfig.spotify.clientSecret === ""){
+		throw new Error("Failed to validate config: spotify.clientSecret is missing!");
 	}
 
-	if(typeof parsedConfig?.spotify?.clientSecret !== "string"){
-		throw new Error(`Missing required config field: clientSecret`);
+	if(typedConfig.spotify.refreshToken === ""){
+		throw new Error("Failed to validate config: spotify.refreshToken is missing!");
 	}
-
-	if(typeof parsedConfig?.spotify?.refreshToken !== "string"){
-		throw new Error(`Missing required config field: refreshToken`);
-	}
-
-	parsedConfig.bigTransition = parsedConfig.bigTransition ?? true;
-
-	return parsedConfig as IConfig;
 }
 
-const config = getConfig();
+function validateTypes(obj: any, model: any, pathStr = ""){
+	for(const key in model){
+		const target = obj[key];
+		const comp = model[key];
 
-export default config;
+		if(typeof target !== typeof comp){
+			throw new Error(`Failed to validate config: ${pathStr}${key} has type of "${typeof target}" when expected type was "${typeof comp}"!`);
+		}
+
+		if(typeof target === "object"){
+			validateTypes(target, comp, `${pathStr}${key}.`);
+		}
+	}
+}
+
+let config = defaultConfig;
+
+export async function initConfig(){
+	const parsedConfig = await (await fetch("./config.json")).json() as Partial<IConfig>;
+	const combinedConfig = Object.assign(JSON.parse(JSON.stringify(defaultConfig)), parsedConfig) as IConfig;
+	
+	validateConfig(combinedConfig);
+
+	config = combinedConfig;
+
+	return config;
+}
+
+export function getConfig(){
+	return config;
+}

@@ -1,4 +1,4 @@
-import config from "./config";
+import {getConfig} from "./config";
 
 const tokenURL = `https://accounts.spotify.com/api/token`;
 const apiURL = `https://api.spotify.com/v1`;
@@ -9,7 +9,14 @@ let refreshPromise: Promise<void> | null = null;
 let stateRefreshIntervalId: number | undefined;
 let tokenRefreshIntervalId: number | undefined;
 
+let config = getConfig();
+
+let tokenAuthStr = "";
+
 export async function initSpotifyAPI(refreshInterval: number = 1000){
+	config = getConfig();
+	tokenAuthStr = `Basic ${btoa(`${config.spotify.clientId}:${config.spotify.clientSecret}`)}`;
+
 	await refreshToken();
 
 	// Don't let refesh interval go below 1 second because of rate limiting stuff.
@@ -125,8 +132,6 @@ async function refreshPlaybackState(): Promise<void>{
 	playbackState.localTimeStamp = performance.now();
 }
 
-const tokenAuthStr = `Basic ${btoa(`${config.spotify.clientId}:${config.spotify.clientSecret}`)}`;
-
 interface ITokenResponse{
 	access_token: string,
 	expires_in: string,
@@ -170,5 +175,3 @@ async function refreshToken(){
 
 	return refreshPromise;
 }
-
-refreshToken();
