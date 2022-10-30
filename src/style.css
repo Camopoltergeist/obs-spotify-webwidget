@@ -1,5 +1,18 @@
 :root{
 	--progressBarHeight: 10px;
+	--titleSize: 32px;
+	--artistSize: calc(var(--titleSize) / 2);
+	--progressSize: var(--artistSize);
+
+	--titleSizeBig: 48px;
+	--artistSizeBig: calc(var(--titleSizeBig) - var(--artistSize) / 2);
+
+	--textMargin: 4px;
+}
+
+@font-face {
+	font-family: Aldrich;
+	src: url("./fonts/aldrich.ttf");
 }
 
 .songText{
@@ -35,7 +48,7 @@
 
 #songTextContainer{
 	display: grid;
-	font-size: 32px;
+	font-size: var(--titleSize);
 }
 
 #artistTextContainer{
@@ -55,7 +68,9 @@
 	left: 0;
 	bottom: 0;
 	width: 600px;
-	height: 83px;
+	height: calc(var(--progressBarHeight) + var(--artistSize) + var(--titleSize) + var(--progressSize) + var(--textMargin));
+	font-family: Aldrich;
+	line-height: 1;
 }
 
 #topContainer{
@@ -63,6 +78,10 @@
 	position: relative;
 	display: flex;
 	flex-direction: column;
+}
+
+#infoDiv{
+	margin: var(--textMargin);
 }
 
 #albumCover{

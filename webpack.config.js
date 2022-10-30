@@ -21,7 +21,7 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			title: "Quick Webpack Template",
 			template: "./src/index.html",
-			scriptLoading: "defer"
+			scriptLoading: "module"
 		})
 	],
 	module: {
@@ -46,7 +46,11 @@ module.exports = {
 			{
 				test: /\.(ogg|mp3|flac|wav)$/i,
 				type: 'asset/resource',
-			}
+			},
+			{
+				test: /\.(woff|woff2|eot|ttf|otf)$/i,
+				type: 'asset/resource',
+			},
 		]
 	},
 	stats: {
