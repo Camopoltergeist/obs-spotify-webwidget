@@ -83,6 +83,7 @@
 	font-family: Aldrich;
 	line-height: 1;
 	transform: skewX(var(--mainSkew));
+	border-radius: 3px 15px 3px 15px;
 }
 
 .bigPos{
@@ -107,6 +108,7 @@
 #progressBar{
 	height: var(--progressBarHeight);
 	background-color: rgba(255, 255, 255, 0.7);
+	border-radius: 1px 3px 1px 3px;
 }
 
 .bright{
