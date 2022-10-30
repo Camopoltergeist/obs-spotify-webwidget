@@ -50,6 +50,7 @@
 	overflow: hidden;
 	white-space: nowrap;
 	color: white;
+	text-shadow: 2px 2px 4px black;
 	position: absolute;
 	left: 0;
 	bottom: 0;
@@ -71,4 +72,17 @@
 #progressBar{
 	height: var(--progressBarHeight);
 	background-color: rgba(255, 255, 255, 0.7);
+}
+
+.bright{
+	background-color: rgba(0, 0, 0, 0);
+}
+
+.dim{
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+#dimmer{
+	height: 100%;
+	transition: background-color, 0.5s;
 }

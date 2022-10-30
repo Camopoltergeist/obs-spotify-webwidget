@@ -6,6 +6,8 @@ const artistTextContainer = document.getElementById("artistTextContainer");
 const progressContainer = document.getElementById("progressContainer");
 const progressBar = document.getElementById("progressBar");
 
+const dimmer = document.getElementById("dimmer");
+
 if(mainDiv === null){
 	throw new Error("Could not find mainDiv in document!");
 }
@@ -24,6 +26,10 @@ if(progressContainer === null){
 
 if(progressBar === null){
 	throw new Error("Could not find progressBar in document!");
+}
+
+if(dimmer === null){
+	throw new Error("Could not find dimmer in document!");
 }
 
 let currentTitleElem: HTMLDivElement;
@@ -72,6 +78,9 @@ export function doTransition(nextTitle: string, nextArtist: string, bgUrl: strin
 	const config = getConfig();
 
 	if(config.bigTransition){
+		dimmer?.classList.remove("dim");
+		dimmer?.classList.add("bright");
+
 		songTextContainer?.classList.add("bigTitle");
 		artistTextContainer?.classList.add("bigArtist");
 		clearTimeout(transitionTimeout);
@@ -84,6 +93,9 @@ export function doTransition(nextTitle: string, nextArtist: string, bgUrl: strin
 			main.style.height = "";
 			songTextContainer?.classList.remove("bigTitle");
 			artistTextContainer?.classList.remove("bigArtist");
+
+			dimmer?.classList.add("dim");
+			dimmer?.classList.remove("bright");
 		}, 7000);
 	}
 
