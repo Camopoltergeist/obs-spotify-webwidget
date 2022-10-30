@@ -4,7 +4,9 @@ interface IConfig{
 		clientSecret: string;
 		refreshToken: string;
 	};
+	width: number;
 	bigTransition: boolean;
+	bigTransitionSize: number;
 }
 
 const defaultConfig: IConfig = {
@@ -13,7 +15,9 @@ const defaultConfig: IConfig = {
 		clientSecret: "",
 		refreshToken: ""
 	},
+	width: 600,
 	bigTransition: true,
+	bigTransitionSize: 1
 };
 
 function validateConfig(configObj: Partial<IConfig>){

@@ -78,7 +78,6 @@
 	left: 20px;
 	bottom: 20px;
 	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
-	width: 600px;
 	height: calc(var(--progressBarHeight) + var(--artistSize) + var(--titleSize) + var(--progressSize) + var(--textMargin));
 	font-family: Aldrich;
 	line-height: 1;

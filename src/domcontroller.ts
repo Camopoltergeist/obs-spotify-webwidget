@@ -86,7 +86,7 @@ export function doTransition(nextTitle: string, nextArtist: string, bgUrl: strin
 		clearTimeout(transitionTimeout);
 
 		const main = mainDiv as HTMLDivElement;
-		const mainWidth = main.offsetWidth;
+		const mainWidth = main.offsetWidth * config.bigTransitionSize;
 		main.style.height = `${mainWidth}px`;
 		main.classList.add("bigPos");
 
@@ -123,6 +123,10 @@ export function doTransition(nextTitle: string, nextArtist: string, bgUrl: strin
 	artistTextContainer?.append(nextArtistElem);
 
 	setBackgroundUrl(bgUrl);
+}
+
+export function setMainWidth(width: number){
+	(mainDiv as HTMLDivElement).style.width = `${width}px`;
 }
 
 export function setProgressText(progressText: string){

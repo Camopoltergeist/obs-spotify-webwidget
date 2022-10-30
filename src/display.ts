@@ -1,7 +1,9 @@
 import { getPlaybackState, IArtist } from "./spotify";
-import { doTransition, setProgressBarWidth, setProgressText, setSongText } from "./domcontroller";
+import { doTransition, setMainWidth, setProgressBarWidth, setProgressText, setSongText } from "./domcontroller";
+import { getConfig } from "./config";
 
 export function initDisplay(){
+	setMainWidth(getConfig().width);
 	requestAnimationFrame(updateDisplay);
 }
 
