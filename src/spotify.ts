@@ -42,7 +42,7 @@ export interface IPlaybackState{
 };
 
 interface IPlaybackItem{
-	album: any;
+	album: IAlbum;
 	artists: IArtist[];
 	available_markets: string[];
 	disc_number: number;
@@ -68,6 +68,28 @@ interface IPlaybackItem{
 	type: string;
 	uri: string;
 	is_local: string;
+}
+
+interface IAlbum{
+	album_type: string;
+	total_tracks: number;
+	available_markets: string[];
+	external_urls: any;
+	href: string;
+	id: string;
+	images: IImage[];
+	name: string;
+	release_date: string;
+	release_date_precision: string;
+	restrictions: any;
+	type: string;
+	uri: string;
+}
+
+interface IImage{
+	url: string;
+	height: number;
+	width: number;
 }
 
 interface IArtist{

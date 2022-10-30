@@ -39,6 +39,11 @@
 }
 
 #mainDiv{
+	transition: background, 0.5s;
+	background-size: cover;
 	background-color: black;
 	color: white;
+	position: absolute;
+	left: 0;
+	top: 0;
 }

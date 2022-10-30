@@ -49,7 +49,7 @@ createInitialElements();
 
 let transitionTimeout: number | undefined;
 
-export function doTransition(nextTitle: string, nextArtist: string){
+export function doTransition(nextTitle: string, nextArtist: string, bgUrl: string){
 	const inTitleElem = nextTitleElem;
 	const inArtistElem = nextArtistElem;
 	const outTitleElem = currentTitleElem;
@@ -96,6 +96,8 @@ export function doTransition(nextTitle: string, nextArtist: string){
 
 	songTextContainer?.append(nextTitleElem);
 	artistTextContainer?.append(nextArtistElem);
+
+	setBackgroundUrl(bgUrl);
 }
 
 export function setProgressText(progressText: string){
@@ -108,6 +110,10 @@ export function setSongText(songText: string){
 
 export function setArtistText(artistText: string){
 	(artistTextContainer as HTMLDivElement).innerText = artistText;
+}
+
+export function setBackgroundUrl(bgUrl: string){
+	(mainDiv as HTMLDivElement).style.backgroundImage = `url("${bgUrl}")`;
 }
 
 function createTextElement(){
