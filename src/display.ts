@@ -1,5 +1,5 @@
 import { getPlaybackState } from "./spotify";
-import { doTransition, setProgressText, setSongText } from "./domcontroller";
+import { doTransition, setProgressBarWidth, setProgressText, setSongText } from "./domcontroller";
 
 export function initDisplay(){
 	requestAnimationFrame(updateDisplay);
@@ -27,10 +27,12 @@ function updateDisplay(time: DOMHighResTimeStamp){
 	// Determine the progress of the song
 	const timeSinceRefresh = time - state.localTimeStamp;
 	const songProgress = state.is_playing ? Math.round(state.progress_ms as number + timeSinceRefresh) : Math.round(state.progress_ms as number);
+	const progressPercent = songProgress / state.item.duration_ms;
 
 	const progressStr = generateTimeString(songProgress);
 
 	setProgressText(progressStr);
+	setProgressBarWidth(progressPercent);
 
 	if(state.item.id !== lastId){
 		doTransition(title, artist, state.item.album.images[0].url);

@@ -4,6 +4,7 @@ const mainDiv = document.getElementById("mainDiv");
 const songTextContainer = document.getElementById("songTextContainer");
 const artistTextContainer = document.getElementById("artistTextContainer");
 const progressContainer = document.getElementById("progressContainer");
+const progressBar = document.getElementById("progressBar");
 
 if(mainDiv === null){
 	throw new Error("Could not find mainDiv in document!");
@@ -19,6 +20,10 @@ if(artistTextContainer === null){
 
 if(progressContainer === null){
 	throw new Error("Could not find progressContainer in document!");
+}
+
+if(progressBar === null){
+	throw new Error("Could not find progressBar in document!");
 }
 
 let currentTitleElem: HTMLDivElement;
@@ -102,6 +107,10 @@ export function doTransition(nextTitle: string, nextArtist: string, bgUrl: strin
 
 export function setProgressText(progressText: string){
 	(progressContainer as HTMLDivElement).innerText = progressText;
+}
+
+export function setProgressBarWidth(width: number){
+	(progressBar as HTMLDivElement).style.width = `${width * 100}%`;
 }
 
 export function setSongText(songText: string){

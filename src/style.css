@@ -1,3 +1,7 @@
+:root{
+	--progressBarHeight: 10px;
+}
+
 .songText{
 	transition: transform 0.5s, opacity 0.5s, font-size 1s;
 	font-size: inherit;
@@ -64,4 +68,14 @@
 #infoDiv{
 	position: absolute;
 	left: 0;
+}
+
+#topContainer{
+	position: relative;
+	height: calc(100% - var(--progressBarHeight));
+}
+
+#progressBar{
+	height: var(--progressBarHeight);
+	background-color: rgba(255, 255, 255, 0.7);
 }
