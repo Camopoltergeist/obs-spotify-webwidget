@@ -14,7 +14,7 @@ function updateDisplay(time: DOMHighResTimeStamp){
 	// Handle undocumented edge case with Spotify's API where it returns a null item, a field which should never be null.
 	if(state === null || state.item === null){
 		if(lastId !== null){
-			doTransition("Nobody - Nothing");
+			doTransition("Nothing", "Nobody");
 		}
 
 		lastId = null;
@@ -29,18 +29,15 @@ function updateDisplay(time: DOMHighResTimeStamp){
 	const songProgress = state.is_playing ? Math.round(state.progress_ms as number + timeSinceRefresh) : Math.round(state.progress_ms as number);
 
 	const progressStr = generateTimeString(songProgress);
-	const songText = `${artist} - ${title}`;
 
 	setProgressText(progressStr);
 
 	if(state.item.id !== lastId){
-		doTransition(songText);
+		doTransition(title, artist);
 		lastId = state.item.id;
 
 		return;
 	}
-
-	setSongText(songText);
 }
 
 function generateTimeString(timeMS: number): string{

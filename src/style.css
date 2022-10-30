@@ -3,8 +3,12 @@
 	font-size: inherit;
 }
 
-.big{
+.bigTitle{
 	font-size: 48px !important;
+}
+
+.bigArtist{
+	font-size: 32px !important;
 }
 
 .in{
@@ -28,6 +32,10 @@
 #songTextContainer{
 	display: grid;
 	font-size: 32px;
+}
+
+#artistTextContainer{
+	display: grid;
 }
 
 #mainDiv{
