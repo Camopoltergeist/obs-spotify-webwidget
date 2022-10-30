@@ -76,7 +76,12 @@ export function doTransition(nextTitle: string, nextArtist: string, bgUrl: strin
 		artistTextContainer?.classList.add("bigArtist");
 		clearTimeout(transitionTimeout);
 
+		const main = mainDiv as HTMLDivElement;
+		const mainWidth = main.offsetWidth;
+		main.style.height = `${mainWidth}px`;
+
 		transitionTimeout = setTimeout(() => {
+			main.style.height = "";
 			songTextContainer?.classList.remove("bigTitle");
 			artistTextContainer?.classList.remove("bigArtist");
 		}, 7000);
