@@ -136,9 +136,9 @@ async function refreshPlaybackState(): Promise<void>{
 	});
 
 	if(!res.ok){
-		// Ignore service unavailable errors
-		if(res.status === 503){
-			console.warn(`Spotify API returned HTTP status 503, status was not updated for this request.`);
+		// Ignore server side errors
+		if(String(res.status).startsWith("5")){
+			console.warn(`Spotify API returned HTTP status starting with 500, status was not updated for this request.`);
 			return;
 		}
 
