@@ -43,7 +43,7 @@
 }
 
 #mainDiv{
-	transition: background, 0.5s, width, 0.5s, height, 0.5s;
+	transition: background, 0.5s, width, 0.5s, height, 1s;
 	background-size: cover;
 	background-color: black;
 	background-position: center;
