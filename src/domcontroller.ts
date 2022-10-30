@@ -88,9 +88,12 @@ export function doTransition(nextTitle: string, nextArtist: string, bgUrl: strin
 		const main = mainDiv as HTMLDivElement;
 		const mainWidth = main.offsetWidth;
 		main.style.height = `${mainWidth}px`;
+		main.classList.add("bigPos");
 
 		transitionTimeout = setTimeout(() => {
 			main.style.height = "";
+			main.classList.remove("bigPos");
+			
 			songTextContainer?.classList.remove("bigTitle");
 			artistTextContainer?.classList.remove("bigArtist");
 

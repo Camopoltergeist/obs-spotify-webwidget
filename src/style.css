@@ -8,6 +8,9 @@
 	--artistSizeBig: calc(var(--titleSizeBig) - var(--artistSize) / 2);
 
 	--textMargin: 4px;
+
+	--mainSkew: 10deg;
+	--unskew: calc(var(--mainSkew) * -1);
 }
 
 @font-face {
@@ -49,14 +52,21 @@
 #songTextContainer{
 	display: grid;
 	font-size: var(--titleSize);
+
+	transform: skewX(var(--unskew));
 }
 
 #artistTextContainer{
 	display: grid;
+	transform: skewX(var(--unskew));
+}
+
+#progressContainer{
+	transform: skewX(var(--unskew));
 }
 
 #mainDiv{
-	transition: background, 0.5s, width, 0.5s, height, 1s;
+	transition: background, 0.5s, width, 0.5s, height, 1s, left, 1s;
 	background-size: cover;
 	background-color: black;
 	background-position: center;
@@ -72,6 +82,11 @@
 	height: calc(var(--progressBarHeight) + var(--artistSize) + var(--titleSize) + var(--progressSize) + var(--textMargin));
 	font-family: Aldrich;
 	line-height: 1;
+	transform: skewX(var(--mainSkew));
+}
+
+.bigPos{
+	left: 100px !important;
 }
 
 #topContainer{
