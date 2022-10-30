@@ -92,7 +92,7 @@ interface IImage{
 	width: number;
 }
 
-interface IArtist{
+export interface IArtist{
 	external_urls: any;
 	followers: any;
 	genres: string[];

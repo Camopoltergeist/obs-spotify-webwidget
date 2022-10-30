@@ -1,4 +1,4 @@
-import { getPlaybackState } from "./spotify";
+import { getPlaybackState, IArtist } from "./spotify";
 import { doTransition, setProgressBarWidth, setProgressText, setSongText } from "./domcontroller";
 
 export function initDisplay(){
@@ -21,7 +21,7 @@ function updateDisplay(time: DOMHighResTimeStamp){
 		return;
 	}
 
-	const artist = state.item.artists[0].name;
+	const artist = generateArtistString(state.item.artists);
 	const title = state.item.name;
 
 	// Determine the progress of the song
@@ -40,6 +40,20 @@ function updateDisplay(time: DOMHighResTimeStamp){
 
 		return;
 	}
+}
+
+function generateArtistString(artistList: IArtist[]){
+	let artistStr = artistList[0].name;
+
+	for(let i = 1; i < artistList.length - 1; i++){
+		artistStr += `, ${artistList[i].name}`;
+	}
+
+	if(artistList.length > 1){
+		artistStr += ` & ${artistList[artistList.length - 1].name}`;
+	}
+
+	return artistStr;
 }
 
 function generateTimeString(timeMS: number): string{
