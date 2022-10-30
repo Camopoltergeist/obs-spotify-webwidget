@@ -43,7 +43,7 @@
 }
 
 #mainDiv{
-	transition: background, 0.5s, width, 0.5s;
+	transition: background, 0.5s, width, 0.5s, height, 0.5s;
 	background-size: cover;
 	background-color: black;
 	background-position: center;
@@ -53,26 +53,17 @@
 	position: absolute;
 	left: 0;
 	bottom: 0;
-	width: 600px;
-	height: 600px;
-}
-
-.topAlign{
-	top: 0;
-}
-
-.bottomAlign{
-	bottom: 0;
-}
-
-#infoDiv{
-	position: absolute;
-	left: 0;
 }
 
 #topContainer{
-	position: relative;
 	height: calc(100% - var(--progressBarHeight));
+	position: relative;
+	display: flex;
+	flex-direction: column;
+}
+
+#albumCover{
+	flex-grow: 1;
 }
 
 #progressBar{

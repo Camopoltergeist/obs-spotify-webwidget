@@ -73,12 +73,12 @@ export function doTransition(nextTitle: string, nextArtist: string, bgUrl: strin
 
 	if(config.bigTransition){
 		songTextContainer?.classList.add("bigTitle");
-		artistTextContainer?.classList.add("bigArtist")
+		artistTextContainer?.classList.add("bigArtist");
 		clearTimeout(transitionTimeout);
 
 		transitionTimeout = setTimeout(() => {
 			songTextContainer?.classList.remove("bigTitle");
-			artistTextContainer?.classList.remove("bigArtist")
+			artistTextContainer?.classList.remove("bigArtist");
 		}, 7000);
 	}
 

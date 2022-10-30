@@ -3,8 +3,8 @@ interface IConfig{
 		clientId: string;
 		clientSecret: string;
 		refreshToken: string;
-	},
-	bigTransition: boolean
+	};
+	bigTransition: boolean;
 }
 
 const defaultConfig: IConfig = {
@@ -13,7 +13,7 @@ const defaultConfig: IConfig = {
 		clientSecret: "",
 		refreshToken: ""
 	},
-	bigTransition: true
+	bigTransition: true,
 };
 
 function validateConfig(configObj: Partial<IConfig>){
