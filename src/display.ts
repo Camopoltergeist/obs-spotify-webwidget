@@ -9,7 +9,9 @@ export function initDisplay(){
 
 let lastId: string | null = null;
 
-let isPlaying: boolean = false;
+// Timestamp of the time when no playback was detected
+let noPlaybackTimestamp: number = 0;
+let displayHidden = false;
 
 function updateDisplay(time: DOMHighResTimeStamp){
 	requestAnimationFrame(updateDisplay);
@@ -46,16 +48,34 @@ function updateDisplay(time: DOMHighResTimeStamp){
 	function hideDisplay(){
 		hide();
 		cancelTransition();
+		displayHidden = true;
 	}
 
 	function showDisplay(){
 		show();
 		doTransition(title, artist, (state as IPlaybackState).item.album.images[0].url);
+		displayHidden = false;
 	}
 
-	if(state.is_playing !== isPlaying){
-		isPlaying ? hideDisplay() : showDisplay();
-		isPlaying = !isPlaying;
+	if(!getConfig().hideWhenNotPlaying){
+		return;
+	}
+
+	if(state.is_playing){
+		noPlaybackTimestamp = time;
+	}
+
+	let timeSinceNoPlayback = time - noPlaybackTimestamp;
+
+	if(timeSinceNoPlayback > getConfig().hideDelay){
+		if(!displayHidden){
+			hideDisplay();
+		}
+	}
+	else{
+		if(displayHidden){
+			showDisplay();
+		}
 	}
 }
 

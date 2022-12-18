@@ -7,6 +7,8 @@ interface IConfig{
 	width: number;
 	bigTransition: boolean;
 	bigTransitionSize: number;
+	hideWhenNotPlaying: boolean;
+	hideDelay: number;
 }
 
 const defaultConfig: IConfig = {
@@ -17,7 +19,9 @@ const defaultConfig: IConfig = {
 	},
 	width: 600,
 	bigTransition: true,
-	bigTransitionSize: 1
+	bigTransitionSize: 1,
+	hideWhenNotPlaying: true,
+	hideDelay: 30000
 };
 
 function validateConfig(configObj: Partial<IConfig>){
