@@ -1,5 +1,5 @@
-import { getPlaybackState, IArtist } from "./spotify";
-import { doTransition, hide, setMainWidth, setProgressBarWidth, setProgressText, setSongText, show } from "./domcontroller";
+import { getPlaybackState, IArtist, IPlaybackState } from "./spotify";
+import { cancelTransition, doTransition, hide, setMainWidth, setProgressBarWidth, setProgressText, setSongText, show } from "./domcontroller";
 import { getConfig } from "./config";
 
 export function initDisplay(){
@@ -9,7 +9,7 @@ export function initDisplay(){
 
 let lastId: string | null = null;
 
-let hideTimeout: number | null = null;
+let isPlaying: boolean = false;
 
 function updateDisplay(time: DOMHighResTimeStamp){
 	requestAnimationFrame(updateDisplay);
@@ -43,11 +43,19 @@ function updateDisplay(time: DOMHighResTimeStamp){
 		lastId = state.item.id;
 	}
 
-	if(state.is_playing){
-		show();
-	}
-	else{
+	function hideDisplay(){
 		hide();
+		cancelTransition();
+	}
+
+	function showDisplay(){
+		show();
+		doTransition(title, artist, (state as IPlaybackState).item.album.images[0].url);
+	}
+
+	if(state.is_playing !== isPlaying){
+		isPlaying ? hideDisplay() : showDisplay();
+		isPlaying = !isPlaying;
 	}
 }
 

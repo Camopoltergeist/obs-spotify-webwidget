@@ -60,7 +60,7 @@ createInitialElements();
 
 let transitionTimeout: number | undefined;
 
-export function doTransition(nextTitle: string, nextArtist: string, bgUrl: string){
+export function doTransition(nextTitle?: string, nextArtist?: string, bgUrl?: string){
 	const inTitleElem = nextTitleElem;
 	const inArtistElem = nextArtistElem;
 	const outTitleElem = currentTitleElem;
@@ -72,8 +72,14 @@ export function doTransition(nextTitle: string, nextArtist: string, bgUrl: strin
 	inArtistElem.classList.remove("in");
 	inArtistElem.classList.add("shown");
 
-	inTitleElem.innerText = nextTitle;
-	inArtistElem.innerText = nextArtist;
+	if(nextTitle !== undefined){
+		console.log(nextTitle);
+		inTitleElem.innerText = nextTitle;
+	}
+
+	if(nextArtist !== undefined){
+		inArtistElem.innerText = nextArtist;
+	}
 
 	const config = getConfig();
 
@@ -90,16 +96,7 @@ export function doTransition(nextTitle: string, nextArtist: string, bgUrl: strin
 		main.style.height = `${transitionHeight}px`;
 		main.classList.add("bigPos");
 
-		transitionTimeout = setTimeout(() => {
-			main.style.height = "";
-			main.classList.remove("bigPos");
-			
-			songTextContainer?.classList.remove("bigTitle");
-			artistTextContainer?.classList.remove("bigArtist");
-
-			dimmer?.classList.add("dim");
-			dimmer?.classList.remove("bright");
-		}, 7000);
+		transitionTimeout = setTimeout(cancelTransition, 7000);
 	}
 
 	outTitleElem.classList.remove("shown");
@@ -122,7 +119,22 @@ export function doTransition(nextTitle: string, nextArtist: string, bgUrl: strin
 	songTextContainer?.append(nextTitleElem);
 	artistTextContainer?.append(nextArtistElem);
 
-	setBackgroundUrl(bgUrl);
+	if(bgUrl !== undefined){
+		setBackgroundUrl(bgUrl);
+	}
+}
+
+export function cancelTransition(){
+	const main = mainDiv as HTMLDivElement;
+
+	main.style.height = "";
+	main.classList.remove("bigPos");
+	
+	songTextContainer?.classList.remove("bigTitle");
+	artistTextContainer?.classList.remove("bigArtist");
+
+	dimmer?.classList.add("dim");
+	dimmer?.classList.remove("bright");
 }
 
 export function setMainWidth(width: number){
