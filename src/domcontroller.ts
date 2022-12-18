@@ -86,8 +86,8 @@ export function doTransition(nextTitle: string, nextArtist: string, bgUrl: strin
 		clearTimeout(transitionTimeout);
 
 		const main = mainDiv as HTMLDivElement;
-		const mainWidth = main.offsetWidth * config.bigTransitionSize;
-		main.style.height = `${mainWidth}px`;
+		const transitionHeight = main.offsetWidth * config.bigTransitionSize;
+		main.style.height = `${transitionHeight}px`;
 		main.classList.add("bigPos");
 
 		transitionTimeout = setTimeout(() => {
@@ -147,6 +147,14 @@ export function setArtistText(artistText: string){
 
 export function setBackgroundUrl(bgUrl: string){
 	(mainDiv as HTMLDivElement).style.backgroundImage = `url("${bgUrl}")`;
+}
+
+export function hide(){
+	(mainDiv as HTMLDivElement).classList.add("hidden");
+}
+
+export function show(){
+	(mainDiv as HTMLDivElement).classList.remove("hidden");
 }
 
 function createTextElement(){
